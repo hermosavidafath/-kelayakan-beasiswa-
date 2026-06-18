@@ -241,16 +241,16 @@ with st.expander("Lihat langkah-langkah perhitungan", expanded=True):
     st.markdown(f"""
 | Himpunan Fuzzy | Fungsi Keanggotaan | Nilai μ |
 |---|---|---|
-| Tidak Layak | Trapesium kiri (turun 1.5 → 2.5) | **{mu_tl:.4f}** |
-| Dipertimbangkan | Segitiga (1.5 – 2.5 – 3.5) | **{mu_dp:.4f}** |
-| Layak | Trapesium kanan (naik 2.5 → 3.5) | **{mu_ly:.4f}** |
+| Tidak Layak | Bahu kiri (1.5 - 2.5) | **{mu_tl:.4f}** |
+| Dipertimbangkan | Segitiga (1.5 - 2.5 - 3.5) | **{mu_dp:.4f}** |
+| Layak | Bahu kanan (2.5 - 3.5) | **{mu_ly:.4f}** |
 """)
 
-    st.markdown("### 2️⃣  Inferensi (Mamdani – max-min)")
+    st.markdown("### 2️⃣  Derajat Keanggotaan")
     st.markdown(f"""
-- α (Tidak Layak)       = **{mu_tl:.4f}**
-- α (Dipertimbangkan)   = **{mu_dp:.4f}**
-- α (Layak)             = **{mu_ly:.4f}**
+- μ (Tidak Layak)       = **{mu_tl:.4f}**
+- μ (Dipertimbangkan)   = **{mu_dp:.4f}**
+- μ (Layak)             = **{mu_ly:.4f}**
 """)
 
     st.markdown("### 3️⃣  Defuzzifikasi (Weighted Average)")
@@ -261,10 +261,9 @@ with st.expander("Lihat langkah-langkah perhitungan", expanded=True):
 
     denom = mu_tl + mu_dp + mu_ly
     if denom > 0:
-        st.markdown(f"""
-$$z^* = \\frac{{{mu_tl:.4f} \\times 1.0 + {mu_dp:.4f} \\times 2.5 + {mu_ly:.4f} \\times 4.0}}
-             {{{denom:.4f}}} = {nilai_crisp:.4f}$$
-""")
+        st.latex(
+            rf"z^* = \frac{{({mu_tl:.4f} \times 1.0) + ({mu_dp:.4f} \times 2.5) + ({mu_ly:.4f} \times 4.0)}}{{{denom:.4f}}} = {nilai_crisp:.4f}"
+        )
 
     st.markdown("### 4️⃣  Keputusan Akhir")
     st.success(f"**{label}** (nilai crisp = {nilai_crisp:.4f})")
